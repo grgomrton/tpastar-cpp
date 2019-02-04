@@ -1,0 +1,2 @@
+add_library(BasicGeometryLibrary include/Vector.h src/Vector.cpp)
+target_include_directories(BasicGeometryLibrary PRIVATE include)
