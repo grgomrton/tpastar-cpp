@@ -3,4 +3,4 @@ project(TpaStarCpp)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_subdirectory("BasicGeometryLibrary")
+add_subdirectory("Geometry")
