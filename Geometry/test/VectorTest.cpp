@@ -14,8 +14,6 @@
  * limitations under the License.
  */
 
-#define CATCH_CONFIG_MAIN
-
 #include "catch.hpp"
 #include "Vector.h"
 
@@ -27,8 +25,8 @@ TEST_CASE("Vector should store passed argument")
     double y = 2.0;
 
     Vector v(x, y);
-    auto x_acquired = v.getX();
-    auto y_acquired = v.getY();
+    auto x_acquired = v.x();
+    auto y_acquired = v.y();
 
     CHECK(x_acquired == Approx(1.0));
     CHECK(y_acquired == Approx(2.0));
@@ -41,10 +39,10 @@ TEST_CASE("Addition should not change input parameters")
 
     v1.plus(v2);
 
-    CHECK(v1.getX() == Approx(2.0));
-    CHECK(v1.getY() == Approx(3.0));
-    CHECK(v2.getX() == Approx(2.0));
-    CHECK(v2.getY() == Approx(-2.0));
+    CHECK(v1.x() == Approx(2.0));
+    CHECK(v1.y() == Approx(3.0));
+    CHECK(v2.x() == Approx(2.0));
+    CHECK(v2.y() == Approx(-2.0));
 }
 
 TEST_CASE("Scalar multiplication should increase its' components in the same magnitude")
@@ -53,8 +51,8 @@ TEST_CASE("Scalar multiplication should increase its' components in the same mag
 
     auto result = v.times(3.0);
 
-    CHECK(result.getX() == Approx(6.0));
-    CHECK(result.getY() == Approx(15.0));
+    CHECK(result.x() == Approx(6.0));
+    CHECK(result.y() == Approx(15.0));
 }
 
 // values come from examples on www.onlinemathlearning.com
@@ -65,8 +63,8 @@ TEST_CASE("Adding another vector should result in new vector containg sum of cor
 
     auto v1_plus_v2 = v1.plus(v2);
 
-    CHECK(v1_plus_v2.getX() == Approx(4.0));
-    CHECK(v1_plus_v2.getY() == Approx(1.0));
+    CHECK(v1_plus_v2.x() == Approx(4.0));
+    CHECK(v1_plus_v2.y() == Approx(1.0));
 }
 
 // values come from examples on www.onlinemathlearning.com
@@ -77,8 +75,8 @@ TEST_CASE("Subtracting another vector should result in new vector containing coo
 
     auto v1_minus_v2 = v1.minus(v2);
 
-    CHECK(v1_minus_v2.getX() == Approx(-1.0));
-    CHECK(v1_minus_v2.getY() == Approx(3.0));
+    CHECK(v1_minus_v2.x() == Approx(-1.0));
+    CHECK(v1_minus_v2.y() == Approx(3.0));
 }
 
 TEST_CASE("Distance of two vectors should be their cartesian distance in two dimension")
@@ -117,9 +115,7 @@ TEST_CASE("Unit vector in clockwise direction should be determined as clockwise"
     Vector u(0.0, 1.0);
     Vector v(1.0, 0.0);
 
-    auto result = v.isInClockWiseDirectionFrom(u);
-
-    CHECK(result);
+    CHECK(v.isInClockWiseDirectionFrom(u));
 }
 
 TEST_CASE("Unit vector in counter clockwise direction should be determined as counter clockwise")
@@ -127,9 +123,7 @@ TEST_CASE("Unit vector in counter clockwise direction should be determined as co
     Vector u(0.0, 1.0);
     Vector v(-1.0, 0.0);
 
-    auto result = v.isInCounterClockWiseDirectionFrom(u);
-
-    CHECK(result);
+    CHECK(v.isInCounterClockWiseDirectionFrom(u));
 }
 
 TEST_CASE("Unit vector in counter clockwise direction should not be determined as clockwise")
@@ -137,9 +131,7 @@ TEST_CASE("Unit vector in counter clockwise direction should not be determined a
     Vector u(0.0, 1.0);
     Vector v(-1.0, 0.0);
 
-    auto result = v.isInClockWiseDirectionFrom(u);
-
-    CHECK_FALSE(result);
+    CHECK_FALSE(v.isInClockWiseDirectionFrom(u));
 }
 
 TEST_CASE("Unit vector in clockwise direction should not be determined as counter clockwise")
@@ -147,9 +139,7 @@ TEST_CASE("Unit vector in clockwise direction should not be determined as counte
     Vector u(0.0, 1.0);
     Vector v(1.0, 0.0);
 
-    auto result = v.isInCounterClockWiseDirectionFrom(u);
-
-    CHECK_FALSE(result);
+    CHECK_FALSE(v.isInCounterClockWiseDirectionFrom(u));
 }
 
 TEST_CASE("Parallel vectors should be determined clockwise")
@@ -160,9 +150,7 @@ TEST_CASE("Parallel vectors should be determined clockwise")
     Vector pm_to_p1 = p1.minus(pm);
     Vector pm_to_p2 = p2.minus(pm);
 
-    auto result = pm_to_p1.isInClockWiseDirectionFrom(pm_to_p2);
-
-    CHECK(result);
+    CHECK(pm_to_p1.isInClockWiseDirectionFrom(pm_to_p2));
 }
 
 TEST_CASE("Parallel vectors should be determined counter clockwise")
@@ -173,9 +161,7 @@ TEST_CASE("Parallel vectors should be determined counter clockwise")
     Vector pm_to_p1 = p1.minus(pm);
     Vector pm_to_p2 = p2.minus(pm);
 
-    auto result = pm_to_p1.isInCounterClockWiseDirectionFrom(pm_to_p2);
-
-    CHECK(result);
+    CHECK(pm_to_p1.isInCounterClockWiseDirectionFrom(pm_to_p2));
 }
 
 TEST_CASE("Vectors in counter clockwise orientation should be determined as counter clockwise") // todo clockwise
@@ -186,9 +172,7 @@ TEST_CASE("Vectors in counter clockwise orientation should be determined as coun
     Vector pm_to_p1 = p1.minus(pm);
     Vector pm_to_p2 = p2.minus(pm);
 
-    auto result = pm_to_p2.isInClockWiseDirectionFrom(pm_to_p1);
-
-    CHECK(result);
+    CHECK(pm_to_p2.isInClockWiseDirectionFrom(pm_to_p1));
 }
 
 TEST_CASE("Vectors in clockwise orientation should be determined as clockwise")
@@ -199,9 +183,7 @@ TEST_CASE("Vectors in clockwise orientation should be determined as clockwise")
     Vector pm_to_p1 = p1.minus(pm);
     Vector pm_to_p2 = p2.minus(pm);
 
-    auto result = pm_to_p1.isInCounterClockWiseDirectionFrom(pm_to_p2);
-
-    CHECK(result);
+    CHECK(pm_to_p1.isInCounterClockWiseDirectionFrom(pm_to_p2));
 }
 
 TEST_CASE("Two vectors representing exactly the same point should be equal")

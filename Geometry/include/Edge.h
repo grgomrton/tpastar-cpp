@@ -16,30 +16,23 @@
 
 #pragma once
 
+#include "Vector.h"
+
 namespace TpaStarCpp::GeometryLibrary {
 
-    class Vector {
+    class Edge {
 
     private:
-        const double x_;
-        const double y_;
+        const Vector a_;
+        const Vector b_;
 
-        double len();
-        double zComponentOfCrossProductWith(Vector other);
+        Vector closestPointTo(Vector point);
 
     public:
-        static constexpr double EQUALITY_CHECK_TOLERANCE = 0.00001;
-
-        Vector(double x, double y);
-        double x();
-        double y();
-        Vector plus(Vector other);
-        Vector minus(Vector other);
-        Vector times(double scalar);
-        double distanceFrom(Vector other);
-        bool isInCounterClockWiseDirectionFrom(Vector other);
-        bool isInClockWiseDirectionFrom(Vector other);
-        bool equals(Vector other);
+        Edge(Vector a, Vector b);
+        Vector a();
+        Vector b();
+        double distanceFrom(Vector point);
 
     };
 
