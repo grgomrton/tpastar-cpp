@@ -33,6 +33,10 @@ namespace TpaStarCpp::GeometryLibrary {
         Vector a();
         Vector b();
         double distanceFrom(Vector point);
+        bool pointLiesOnEdge(Vector point);
+        bool equals(Edge other);
+
+        // todo hashes
 
     };
 

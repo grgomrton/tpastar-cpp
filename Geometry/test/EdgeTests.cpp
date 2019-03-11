@@ -105,3 +105,74 @@ TEST_CASE("Distance of point from diagonal edge should be the lenght of right li
     CHECK(edge.distanceFrom(pointToCheck) == Approx(squareRootTwo));
 }
 
+TEST_CASE("Points that are closer to the edge than vector tolerance should fall on edge")
+{
+    double tolerance = 0.00001;
+    Vector a(0.0, 0.0);
+    Vector b(1.0, 0.0);
+    Edge edge(a, b);
+    Vector pointToCheck(0.5, 0.000005);
+
+    auto is_point_on_edge = edge.pointLiesOnEdge(pointToCheck);
+
+    CHECK(Vector::EQUALITY_CHECK_TOLERANCE == Approx(tolerance));
+    CHECK(is_point_on_edge);
+}
+
+TEST_CASE("Points that are exactly in vector tolerance distance should not fall on edge")
+{
+    double tolerance = 0.00001;
+    Vector a(0.0, 0.0);
+    Vector b(1.0, 0.0);
+    Edge edge(a, b);
+    Vector pointToCheck(0.5, 0.1);
+
+    auto is_point_on_edge = edge.pointLiesOnEdge(pointToCheck);
+
+    CHECK(Vector::EQUALITY_CHECK_TOLERANCE == Approx(tolerance));
+    CHECK_FALSE(is_point_on_edge);
+}
+
+TEST_CASE("Edges should be equal if they lie between same endpoints")
+{
+    Vector leftEndpointOfFirstEdge(1.0, 3.0);
+    Vector leftEndpointOfSecondEdge(1.0, 3.0);
+    Vector rightEndpointOfFirstEdge(4.0, 3.0);
+    Vector rightEndpointOfSecondEdge(4.0, 3.0);
+    Edge firstEdge(leftEndpointOfFirstEdge, rightEndpointOfFirstEdge);
+    Edge secondEdge(leftEndpointOfSecondEdge, rightEndpointOfSecondEdge);
+
+    CHECK(firstEdge.equals(secondEdge));
+}
+
+TEST_CASE("EdgesShouldBeEqualIfTheyLieBetweenSameEndpointsIndependentlyFromEndpointOrder")
+{
+    Vector leftEndpointOfFirstEdge(1.0, 3.0);
+    Vector leftEndpointOfSecondEdge(1.0, 3.0);
+    Vector rightEndpointOfFirstEdge(4.0, 3.0);
+    Vector rightEndpointOfSecondEdge(4.0, 3.0);
+    Edge firstEdge(leftEndpointOfFirstEdge, rightEndpointOfFirstEdge);
+    Edge secondEdge(rightEndpointOfSecondEdge, leftEndpointOfSecondEdge);
+
+    CHECK(firstEdge.equals(secondEdge));
+}
+
+TEST_CASE("Edges should not be equal if one of their endpoints are different")
+{
+    Vector leftEndpointOfFirstEdge(5.0, 8.0);
+    Vector leftEndpointOfSecondEdge(1.0, 3.0);
+    Vector rightEndpointOfFirstEdge(4.0, 3.0);
+    Vector rightEndpointOfSecondEdge(4.0, 3.0);
+    Edge firstEdge(leftEndpointOfFirstEdge, rightEndpointOfFirstEdge);
+    Edge secondEdge(rightEndpointOfSecondEdge, leftEndpointOfSecondEdge);
+
+    CHECK_FALSE(firstEdge.equals(secondEdge));
+}
+
+TEST_CASE("Distorted edge should not be created")
+{
+    Vector a(0.0, 1.0);
+    Vector b(0.0, 1.0);
+
+    CHECK_THROWS_WITH(Edge(a, b), Catch::Contains("equal"));
+}

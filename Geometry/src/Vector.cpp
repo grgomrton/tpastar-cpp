@@ -19,7 +19,6 @@
 
 using namespace TpaStarCpp::GeometryLibrary;
 
-
 Vector::Vector(double x, double y) : x_(x), y_(y) { }
 
 double Vector::x() { return x_; }

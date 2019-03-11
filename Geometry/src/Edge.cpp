@@ -16,16 +16,22 @@
 
 #include <Edge.h>
 #include <algorithm>
+#include <stdexcept>
 
 using namespace TpaStarCpp::GeometryLibrary;
 
-Edge::Edge(Vector a, Vector b) : a_(a), b_(b) {}
+Edge::Edge(Vector a, Vector b) : a_(a), b_(b)
+{
+    if (a.equals(b)) { throw std::invalid_argument("The specified endpoints are equal"); }
+}
 
 Vector Edge::a() { return a_; }
 
 Vector Edge::b() { return b_; }
 
 double Edge::distanceFrom(Vector point) { return this->closestPointTo(point).distanceFrom(point); }
+
+bool Edge::pointLiesOnEdge(Vector point) { return distanceFrom(point) < Vector::EQUALITY_CHECK_TOLERANCE; }
 
 /*
  * source: http://www.gamedev.net/topic/444154-closest-point-on-a-line/
@@ -43,7 +49,6 @@ double Edge::distanceFrom(Vector point) { return this->closestPointTo(point).dis
  *   }
  *   Vector Closest = A + AB * t;
  * }
- *
  */
 Vector Edge::closestPointTo(Vector point)
 {
@@ -51,9 +56,15 @@ Vector Edge::closestPointTo(Vector point)
     Vector ab = b().minus(a());
     auto ab2 = ab.x() * ab.x() + ab.y() * ab.y();
     auto ap_ab = ap.x() * ab.x() + ap.y() * ab.y();
-    auto t = ap_ab / ab2; // todo ab2 would be zero on a zero length edge in the origin, therefore exception is required in the ctor
+    auto t = ap_ab / ab2;
     t = std::max(std::min(t, 1.0), 0.0);
     Vector closest = a().plus(ab.times(t));
 
     return closest;
+}
+
+bool Edge::equals(Edge other)
+{
+    return (a().equals(other.a()) && b().equals(other.b()))
+        || (a().equals(other.b()) && b().equals(other.a()));
 }
