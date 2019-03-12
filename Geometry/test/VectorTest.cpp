@@ -37,7 +37,7 @@ TEST_CASE("Addition should not change input parameters")
     Vector v1(2.0, 3.0);
     Vector v2(2.0, -2.0);
 
-    v1.plus(v2);
+    v1 + v2;
 
     CHECK(v1.x() == Approx(2.0));
     CHECK(v1.y() == Approx(3.0));
@@ -49,7 +49,7 @@ TEST_CASE("Scalar multiplication should increase its' components in the same mag
 {
     Vector v(2.0, 5.0);
 
-    auto result = v.times(3.0);
+    auto result = v * 3.0;
 
     CHECK(result.x() == Approx(6.0));
     CHECK(result.y() == Approx(15.0));
@@ -61,7 +61,7 @@ TEST_CASE("Adding another vector should result in new vector containg sum of cor
     Vector v1(2.0, 3.0);
     Vector v2(2.0, -2.0);
 
-    auto v1_plus_v2 = v1.plus(v2);
+    auto v1_plus_v2 = v1 + v2;
 
     CHECK(v1_plus_v2.x() == Approx(4.0));
     CHECK(v1_plus_v2.y() == Approx(1.0));
@@ -73,7 +73,7 @@ TEST_CASE("Subtracting another vector should result in new vector containing coo
     Vector v1(2.0, 1.0);
     Vector v2(3.0, -2.0);
 
-    auto v1_minus_v2 = v1.minus(v2);
+    auto v1_minus_v2 = v1 - v2;
 
     CHECK(v1_minus_v2.x() == Approx(-1.0));
     CHECK(v1_minus_v2.y() == Approx(3.0));
@@ -147,8 +147,8 @@ TEST_CASE("Parallel vectors should be determined clockwise")
     Vector p1(1.0, 1.0);
     Vector p2(3.0, 1.0);
     Vector pm(2.0, 1.0);
-    Vector pm_to_p1 = p1.minus(pm);
-    Vector pm_to_p2 = p2.minus(pm);
+    Vector pm_to_p1 = p1 - pm;
+    Vector pm_to_p2 = p2 - pm;
 
     CHECK(pm_to_p1.isInClockWiseDirectionFrom(pm_to_p2));
 }
@@ -158,8 +158,8 @@ TEST_CASE("Parallel vectors should be determined counter clockwise")
     Vector p1(1.0, 1.0);
     Vector p2(3.0, 1.0);
     Vector pm(2.0, 1.0);
-    Vector pm_to_p1 = p1.minus(pm);
-    Vector pm_to_p2 = p2.minus(pm);
+    Vector pm_to_p1 = p1 - pm;
+    Vector pm_to_p2 = p2 - pm;
 
     CHECK(pm_to_p1.isInCounterClockWiseDirectionFrom(pm_to_p2));
 }
@@ -169,8 +169,8 @@ TEST_CASE("Vectors in counter clockwise orientation should be determined as coun
     Vector p2(3.0, 1.0);
     Vector p1(2.0, 2.0);
     Vector pm(2.0, 1.0);
-    Vector pm_to_p1 = p1.minus(pm);
-    Vector pm_to_p2 = p2.minus(pm);
+    Vector pm_to_p1 = p1 - pm;
+    Vector pm_to_p2 = p2 - pm;
 
     CHECK(pm_to_p2.isInClockWiseDirectionFrom(pm_to_p1));
 }
@@ -180,8 +180,8 @@ TEST_CASE("Vectors in clockwise orientation should be determined as clockwise")
     Vector p2(3.0, 1.0);
     Vector p1(2.0, 2.0);
     Vector pm(2.0, 1.0);
-    Vector pm_to_p1 = p1.minus(pm);
-    Vector pm_to_p2 = p2.minus(pm);
+    Vector pm_to_p1 = p1 - pm;
+    Vector pm_to_p2 = p2 - pm;
 
     CHECK(pm_to_p1.isInCounterClockWiseDirectionFrom(pm_to_p2));
 }
@@ -191,7 +191,7 @@ TEST_CASE("Two vectors representing exactly the same point should be equal")
     Vector u(2.5, 3.6);
     Vector v(2.5, 3.6);
 
-    CHECK(u.equals(v));
+    CHECK(u == v);
 }
 
 TEST_CASE("Two vectors representing exactly the same point should be equal independently from comparison order")
@@ -199,14 +199,14 @@ TEST_CASE("Two vectors representing exactly the same point should be equal indep
     Vector u(2.5, 3.6);
     Vector v(2.5, 3.6);
 
-    CHECK(v.equals(u));
+    CHECK(v == u);
 }
 
 TEST_CASE("Vector should be equal to itself")
 {
     Vector u(2.5, 3.5);
 
-    CHECK(u.equals(u));
+    CHECK(u == u);
 }
 
 TEST_CASE("Vectors differing less than the tolerance should be equal")
@@ -215,7 +215,7 @@ TEST_CASE("Vectors differing less than the tolerance should be equal")
     Vector u(1.0, 1.0);
     Vector v(1.000005, 1.0);
 
-    auto result = u.equals(v);
+    auto result = (u == v);
 
     CHECK(Vector::EQUALITY_CHECK_TOLERANCE == Approx(tolerance));
     CHECK(result);
@@ -227,7 +227,7 @@ TEST_CASE("Vectors differing exactly the same amount as the tolerance should not
     Vector u(1.0, 1.0);
     Vector v(1.00001, 1.0);
 
-    auto result = u.equals(v);
+    auto result = (u == v);
 
     CHECK(Vector::EQUALITY_CHECK_TOLERANCE == Approx(tolerance));
     CHECK_FALSE(result);
@@ -239,7 +239,7 @@ TEST_CASE("Vectors differing more than the tolerance should not be equal")
     Vector u(1.01, 1.01);
     Vector v(1.0, 1.0);
 
-    auto result = u.equals(v);
+    auto result = (u == v);
 
     CHECK(Vector::EQUALITY_CHECK_TOLERANCE == Approx(tolerance));
     CHECK_FALSE(result);
@@ -251,7 +251,7 @@ TEST_CASE("Vectors differing in both coordinates but are closer than tolerance s
     Vector u(1.000001, 1.0);
     Vector v(1.0, 1.000001);
 
-    auto result = u.equals(v);
+    auto result = (u == v);
 
     CHECK(Vector::EQUALITY_CHECK_TOLERANCE == Approx(tolerance));
     CHECK(result);

@@ -20,23 +20,22 @@
 
 namespace TpaStarCpp::GeometryLibrary {
 
-    class Edge {
+    class Triangle {
 
     private:
-        const Vector a_;
-        const Vector b_;
+        const long id_;
+        const Vector vertices_[3];
 
-        Vector closestPointTo(Vector point) const;
+        bool matchesAnyStoredVertex(Vector point) const;
+        int sharedVertexCountWith(Triangle other) const;
 
     public:
-        Edge(Vector a,Vector b);
+        Triangle(long id, Vector a,Vector b, Vector c);
         Vector a() const;
-        Vector b() const ;
-        double distanceFrom(Vector point) const;
-        bool pointLiesOnEdge(Vector point) const;
-        bool operator==(Edge other) const;
-
-        // todo hashes
+        Vector b() const;
+        Vector c() const;
+        long id() const;
+        bool isAdjacentWith(Triangle other) const;
 
     };
 

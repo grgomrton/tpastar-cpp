@@ -22,16 +22,16 @@ using namespace TpaStarCpp::GeometryLibrary;
 
 Edge::Edge(Vector a, Vector b) : a_(a), b_(b)
 {
-    if (a.equals(b)) { throw std::invalid_argument("The specified endpoints are equal"); }
+    if (a == b) { throw std::invalid_argument("The specified endpoints are equal"); }
 }
 
-Vector Edge::a() { return a_; }
+Vector Edge::a() const { return a_; }
 
-Vector Edge::b() { return b_; }
+Vector Edge::b() const { return b_; }
 
-double Edge::distanceFrom(Vector point) { return this->closestPointTo(point).distanceFrom(point); }
+double Edge::distanceFrom(Vector point) const { return this->closestPointTo(point).distanceFrom(point); }
 
-bool Edge::pointLiesOnEdge(Vector point) { return distanceFrom(point) < Vector::EQUALITY_CHECK_TOLERANCE; }
+bool Edge::pointLiesOnEdge(Vector point) const { return distanceFrom(point) < Vector::EQUALITY_CHECK_TOLERANCE; }
 
 /*
  * source: http://www.gamedev.net/topic/444154-closest-point-on-a-line/
@@ -50,21 +50,21 @@ bool Edge::pointLiesOnEdge(Vector point) { return distanceFrom(point) < Vector::
  *   Vector Closest = A + AB * t;
  * }
  */
-Vector Edge::closestPointTo(Vector point)
+Vector Edge::closestPointTo(Vector point) const
 {
-    Vector ap = point.minus(a());
-    Vector ab = b().minus(a());
+    Vector ap = point - a();
+    Vector ab = b() - a();
     auto ab2 = ab.x() * ab.x() + ab.y() * ab.y();
     auto ap_ab = ap.x() * ab.x() + ap.y() * ab.y();
     auto t = ap_ab / ab2;
     t = std::max(std::min(t, 1.0), 0.0);
-    Vector closest = a().plus(ab.times(t));
+    Vector closest = a() + ab * t;
 
     return closest;
 }
 
-bool Edge::equals(Edge other)
+bool Edge::operator==(Edge other) const
 {
-    return (a().equals(other.a()) && b().equals(other.b()))
-        || (a().equals(other.b()) && b().equals(other.a()));
+    return ((a() == other.a()) && b() == other.b())
+        || ((a() == other.b()) && b() == other.a());
 }

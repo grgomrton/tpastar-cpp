@@ -24,22 +24,23 @@ namespace TpaStarCpp::GeometryLibrary {
         const double x_;
         const double y_;
 
-        double len();
-        double zComponentOfCrossProductWith(Vector other);
+        double len() const;
+        double zComponentOfCrossProductWith(Vector other) const;
 
     public:
         static constexpr double EQUALITY_CHECK_TOLERANCE = 0.00001;
 
         Vector(double x, double y);
-        double x();
-        double y();
-        Vector plus(Vector other);
-        Vector minus(Vector other);
-        Vector times(double scalar);
-        double distanceFrom(Vector other);
-        bool isInCounterClockWiseDirectionFrom(Vector other);
-        bool isInClockWiseDirectionFrom(Vector other);
-        bool equals(Vector other);
+        double x() const;
+        double y() const;
+        Vector operator+(Vector other) const;
+        Vector operator-(Vector other) const;
+        Vector operator*(double scalar) const;
+        double distanceFrom(Vector other) const;
+        bool isInCounterClockWiseDirectionFrom(Vector other) const;
+        bool isInClockWiseDirectionFrom(Vector other) const;
+        bool operator==(Vector other) const;
+        // note: performance issues were not investigated
 
     };
 

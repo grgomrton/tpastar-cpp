@@ -24,12 +24,12 @@ TEST_CASE("Edge should store passed argument")
     Vector a(1.0, 2.0);
     Vector b(3.0, 4.0);
 
-    Edge e(a, b);
+    Edge edge(a, b);
 
-    CHECK(e.a().x() == Approx(1.0));
-    CHECK(e.a().y() == Approx(2.0));
-    CHECK(e.b().x() == Approx(3.0));
-    CHECK(e.b().y() == Approx(4.0));
+    CHECK(edge.a().x() == Approx(1.0));
+    CHECK(edge.a().y() == Approx(2.0));
+    CHECK(edge.b().x() == Approx(3.0));
+    CHECK(edge.b().y() == Approx(4.0));
 }
 
 TEST_CASE("Distance from point should be zero if point falls on left endpoint")
@@ -142,7 +142,7 @@ TEST_CASE("Edges should be equal if they lie between same endpoints")
     Edge firstEdge(leftEndpointOfFirstEdge, rightEndpointOfFirstEdge);
     Edge secondEdge(leftEndpointOfSecondEdge, rightEndpointOfSecondEdge);
 
-    CHECK(firstEdge.equals(secondEdge));
+    CHECK(firstEdge == secondEdge);
 }
 
 TEST_CASE("EdgesShouldBeEqualIfTheyLieBetweenSameEndpointsIndependentlyFromEndpointOrder")
@@ -154,7 +154,7 @@ TEST_CASE("EdgesShouldBeEqualIfTheyLieBetweenSameEndpointsIndependentlyFromEndpo
     Edge firstEdge(leftEndpointOfFirstEdge, rightEndpointOfFirstEdge);
     Edge secondEdge(rightEndpointOfSecondEdge, leftEndpointOfSecondEdge);
 
-    CHECK(firstEdge.equals(secondEdge));
+    CHECK(firstEdge == secondEdge);
 }
 
 TEST_CASE("Edges should not be equal if one of their endpoints are different")
@@ -166,7 +166,7 @@ TEST_CASE("Edges should not be equal if one of their endpoints are different")
     Edge firstEdge(leftEndpointOfFirstEdge, rightEndpointOfFirstEdge);
     Edge secondEdge(rightEndpointOfSecondEdge, leftEndpointOfSecondEdge);
 
-    CHECK_FALSE(firstEdge.equals(secondEdge));
+    CHECK_FALSE(firstEdge == secondEdge);
 }
 
 TEST_CASE("Distorted edge should not be created")
