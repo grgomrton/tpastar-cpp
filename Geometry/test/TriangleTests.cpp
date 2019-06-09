@@ -29,7 +29,7 @@ TEST_CASE("Triangle should store the passed arguments")
     double x_c = 1.5;
     double y_c = 2.0;
 
-    Triangle triangle(id, Vector(x_a, y_a), Vector(x_b, y_b), Vector(x_c, y_c));
+    Triangle triangle(id, Vector(x_a, y_a), Vector(x_b, y_b), Vector(x_c, y_c), nullptr);
 
     CHECK(triangle.id() == id);
     CHECK(triangle.a().x() == Approx(x_a));
@@ -38,84 +38,4 @@ TEST_CASE("Triangle should store the passed arguments")
     CHECK(triangle.b().y() == Approx(y_b));
     CHECK(triangle.c().x() == Approx(x_c));
     CHECK(triangle.c().y() == Approx(y_c));
-}
-
-TEST_CASE("Distorted triangles should not be created when third corner lies on edge between first and second corner")
-{
-    long id = 0;
-    Vector a(2.0, 2.0);
-    Vector b(3.0, 1.0);
-    Vector c(2.5, 1.5);
-
-    CHECK_THROWS_WITH(Triangle(id, a, b, c), Catch::Contains("distorted", Catch::CaseSensitive::No));
-}
-
-TEST_CASE("Distorted triangles should not be created when second corner lies on edge between first and third corner")
-{
-    long id = 0;
-    Vector a(2.0, 2.0);
-    Vector b(4.0, 4.0);
-    Vector c(3.0, 3.0);
-
-    CHECK_THROWS_WITH(Triangle(id, a, b, c), Catch::Contains("distorted", Catch::CaseSensitive::No));
-}
-
-TEST_CASE("Distorted triangles should not be created when first corner lies on edge between second and third corner")
-{
-    long id = 0;
-    Vector a(3.0, 3.0);
-    Vector b(4.0, 4.0);
-    Vector c(2.0, 2.0);
-
-    CHECK_THROWS_WITH(Triangle(id, a, b, c), Catch::Contains("distorted", Catch::CaseSensitive::No));
-}
-
-TEST_CASE("Distorted triangles should not be created when two corners overlap each-other")
-{
-    long id = 0;
-    Vector a(1.0, 1.0);
-    Vector b(3.0, 3.0);
-    Vector c(1.0, 1.0);
-
-    CHECK_THROWS_WITH(Triangle(id, a, b, c), Catch::Contains("endpoints", Catch::CaseSensitive::No));
-}
-
-TEST_CASE("Non-adjacent triangles should be determined not neighbours")
-{
-    Triangle t1(1, Vector(1.0, 1.0), Vector(2.0, 1.0), Vector(2.0, 3.0));
-    Triangle t2(10, Vector(4.0, 5.0), Vector(6.0, 5.0), Vector(5.0, 3.0));
-
-    CHECK_FALSE(t1.isAdjacentWith(t2));
-}
-
-TEST_CASE("Adjacent triangles should be determined neighbours")
-{
-    Triangle t1(1, Vector(1.0, 1.0), Vector(2.0, 1.0), Vector(2.0, 3.0));
-    Triangle t2(10, Vector(2.0, 1.0), Vector(2.0, 3.0), Vector(5.0, 1.0));
-
-    CHECK(t1.isAdjacentWith(t2));
-}
-
-TEST_CASE("Adjacent triangles should be determined neighbours independently from query order")
-{
-    Triangle t1(1, Vector(1.0, 1.0), Vector(2.0, 1.0), Vector(2.0, 3.0));
-    Triangle t2(10, Vector(2.0, 1.0), Vector(2.0, 3.0), Vector(5.0, 1.0));
-
-    CHECK(t2.isAdjacentWith(t1));
-}
-
-TEST_CASE("Adjacent triangles should be determined neighbours independently from corner definition direction")
-{
-    Triangle t1(1, Vector(1.0, 1.0), Vector(2.0, 1.0), Vector(2.0, 3.0));
-    Triangle t2(10, Vector(5.0, 1.0), Vector(2.0, 3.0), Vector(2.0, 1.0));
-
-    CHECK(t2.isAdjacentWith(t1));
-}
-
-TEST_CASE("Triangles that are connected by only one corner should not be determined neighbours")
-{
-    Triangle t1(1, Vector(1.0, 1.0), Vector(2.0, 1.0), Vector(2.0, 3.5));
-    Triangle t2(10, Vector(2.0, 1.0), Vector(5.0, 1.0), Vector(2.0, 3.0));
-
-    CHECK_FALSE(t1.isAdjacentWith(t2));
 }

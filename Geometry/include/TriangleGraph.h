@@ -16,31 +16,29 @@
 
 #pragma once
 
+#include <vector>
+#include <memory>
+
 namespace TpaStarCpp::GeometryLibrary {
 
-    class Vector {
+    class TriangleSkeleton;
+    class Triangle;
+    class Vector;
+
+    class TriangleGraph : public std::enable_shared_from_this<TriangleGraph> {
 
     private:
-        const double x_;
-        const double y_;
+        std::vector<TriangleSkeleton> triangles_;
+        std::vector<std::vector<long>> neighbourIds_;
 
-        double zComponentOfCrossProductWith(Vector other);
+        long determineIdOfTriangleUnderPoint(Vector point);
+        Triangle buildTriangleFromId(long id);
 
     public:
-        static constexpr double EQUALITY_CHECK_TOLERANCE = 0.00001;
-
-        Vector(double x, double y);
-        double x();
-        double y();
-        Vector operator+(Vector other);
-        Vector operator-(Vector other);
-        Vector operator*(double scalar);
-        bool operator==(Vector other);
-        double distanceFrom(Vector other);
-        double len();
-        double dotProductWith(Vector other);
-        bool isInCounterClockWiseDirectionFrom(Vector other);
-        bool isInClockWiseDirectionFrom(Vector other);
+        explicit TriangleGraph(std::vector<TriangleSkeleton> triangles);
+        bool containsPoint(Vector point);
+        Triangle getTriangleUnder(Vector point);
+        std::vector<Triangle> getNeighbours(Triangle triangle);
 
     };
 

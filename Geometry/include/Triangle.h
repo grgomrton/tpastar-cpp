@@ -17,25 +17,27 @@
 #pragma once
 
 #include "Vector.h"
+#include <vector>
+#include <memory>
 
 namespace TpaStarCpp::GeometryLibrary {
+
+    class TriangleGraph;
 
     class Triangle {
 
     private:
         const long id_;
         const Vector vertices_[3];
-
-        bool matchesAnyStoredVertex(Vector point) const;
-        int sharedVertexCountWith(Triangle other) const;
+        std::shared_ptr<TriangleGraph> graph_;
 
     public:
-        Triangle(long id, Vector a,Vector b, Vector c);
-        Vector a() const;
-        Vector b() const;
-        Vector c() const;
-        long id() const;
-        bool isAdjacentWith(Triangle other) const;
+        Triangle(long id, Vector a,Vector b, Vector c, std::shared_ptr<TriangleGraph> graph);
+        Vector a();
+        Vector b();
+        Vector c();
+        long id();
+        std::vector<Triangle> getNeighbours();
 
     };
 

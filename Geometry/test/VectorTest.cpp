@@ -191,7 +191,9 @@ TEST_CASE("Two vectors representing exactly the same point should be equal")
     Vector u(2.5, 3.6);
     Vector v(2.5, 3.6);
 
-    CHECK(u == v);
+    auto equalityCheckResult = (u == v);
+
+    CHECK(equalityCheckResult);
 }
 
 TEST_CASE("Two vectors representing exactly the same point should be equal independently from comparison order")
@@ -199,14 +201,18 @@ TEST_CASE("Two vectors representing exactly the same point should be equal indep
     Vector u(2.5, 3.6);
     Vector v(2.5, 3.6);
 
-    CHECK(v == u);
+    auto equalityCheckResult = (v == u);
+
+    CHECK(equalityCheckResult);
 }
 
 TEST_CASE("Vector should be equal to itself")
 {
     Vector u(2.5, 3.5);
 
-    CHECK(u == u);
+    auto equalityCheckResult = (u == u);
+
+    CHECK(equalityCheckResult);
 }
 
 TEST_CASE("Vectors differing less than the tolerance should be equal")

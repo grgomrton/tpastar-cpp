@@ -142,7 +142,9 @@ TEST_CASE("Edges should be equal if they lie between same endpoints")
     Edge firstEdge(leftEndpointOfFirstEdge, rightEndpointOfFirstEdge);
     Edge secondEdge(leftEndpointOfSecondEdge, rightEndpointOfSecondEdge);
 
-    CHECK(firstEdge == secondEdge);
+    auto equalityCheckResult = (firstEdge == secondEdge);
+
+    CHECK(equalityCheckResult);
 }
 
 TEST_CASE("EdgesShouldBeEqualIfTheyLieBetweenSameEndpointsIndependentlyFromEndpointOrder")
@@ -154,7 +156,9 @@ TEST_CASE("EdgesShouldBeEqualIfTheyLieBetweenSameEndpointsIndependentlyFromEndpo
     Edge firstEdge(leftEndpointOfFirstEdge, rightEndpointOfFirstEdge);
     Edge secondEdge(rightEndpointOfSecondEdge, leftEndpointOfSecondEdge);
 
-    CHECK(firstEdge == secondEdge);
+    auto equalityCheckResult = (firstEdge == secondEdge);
+
+    CHECK(equalityCheckResult);
 }
 
 TEST_CASE("Edges should not be equal if one of their endpoints are different")
@@ -166,7 +170,9 @@ TEST_CASE("Edges should not be equal if one of their endpoints are different")
     Edge firstEdge(leftEndpointOfFirstEdge, rightEndpointOfFirstEdge);
     Edge secondEdge(rightEndpointOfSecondEdge, leftEndpointOfSecondEdge);
 
-    CHECK_FALSE(firstEdge == secondEdge);
+    auto equalityCheckResult = (firstEdge == secondEdge);
+
+    CHECK_FALSE(equalityCheckResult);
 }
 
 TEST_CASE("Distorted edge should not be created")

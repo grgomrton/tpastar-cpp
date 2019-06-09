@@ -14,22 +14,28 @@
  * limitations under the License.
  */
 
-#include <Triangle.h>
-#include <Edge.h>
-#include <stdexcept>
-#include "TriangleGraph.h"
+#pragma once
 
-using namespace TpaStarCpp::GeometryLibrary;
+#include "Vector.h"
 
-Triangle::Triangle(long id, Vector a, Vector b, Vector c, std::shared_ptr<TriangleGraph> graph) :
-        id_(id), vertices_{a, b, c}, graph_(std::move(graph)) { }
+namespace TpaStarCpp::GeometryLibrary {
 
-Vector Triangle::a() { return vertices_[0]; }
+    class TriangleSkeleton {
 
-Vector Triangle::b() { return vertices_[1]; }
+    private:
+        const Vector vertices_[3];
 
-Vector Triangle::c() { return vertices_[2]; }
+        bool matchesAnyStoredVertex(Vector point);
+        int sharedVertexCountWith(TriangleSkeleton other);
 
-long Triangle::id() { return id_; }
+    public:
+        TriangleSkeleton(Vector a,Vector b, Vector c);
+        bool isAdjacentWith(TriangleSkeleton other);
+        bool containsPoint(Vector point);
+        Vector a();
+        Vector b();
+        Vector c();
 
-std::vector<Triangle> Triangle::getNeighbours() { return graph_->getNeighbours(*this); }
+    };
+
+}

@@ -21,24 +21,26 @@ using namespace TpaStarCpp::GeometryLibrary;
 
 Vector::Vector(double x, double y) : x_(x), y_(y) { }
 
-double Vector::x() const { return x_; }
+double Vector::x() { return x_; }
 
-double Vector::y() const { return y_; }
+double Vector::y() { return y_; }
 
-Vector Vector::operator+(Vector other) const { return Vector(x_ + other.x_, y_ + other.y_); }
+Vector Vector::operator+(Vector other) { return Vector(x_ + other.x_, y_ + other.y_); }
 
-Vector Vector::operator-(Vector other) const { return Vector(x_ - other.x_, y_ - other.y_); }
+Vector Vector::operator-(Vector other) { return Vector(x_ - other.x_, y_ - other.y_); }
 
-double Vector::distanceFrom(Vector other) const { return ((*this) - other).len(); }
+double Vector::distanceFrom(Vector other) { return ((*this) - other).len(); }
 
-Vector Vector::operator*(double scalar) const { return Vector(scalar * x_, scalar * y_); }
+Vector Vector::operator*(double scalar) { return Vector(scalar * x_, scalar * y_); }
 
-bool Vector::isInClockWiseDirectionFrom(Vector other) const { return zComponentOfCrossProductWith(other) >= 0.0; }
+bool Vector::isInClockWiseDirectionFrom(Vector other) { return zComponentOfCrossProductWith(other) >= 0.0; }
 
-bool Vector::isInCounterClockWiseDirectionFrom(Vector other) const { return zComponentOfCrossProductWith(other) <= 0.0; }
+bool Vector::isInCounterClockWiseDirectionFrom(Vector other) { return zComponentOfCrossProductWith(other) <= 0.0; }
 
-bool Vector::operator==(Vector other) const { return (*this).distanceFrom(other) < EQUALITY_CHECK_TOLERANCE; }
+bool Vector::operator==(Vector other) { return (*this).distanceFrom(other) < EQUALITY_CHECK_TOLERANCE; }
 
-double Vector::len() const { return sqrt(pow(x_, 2.0) + pow(y_, 2.0)); }
+double Vector::len() { return sqrt(pow(x_, 2.0) + pow(y_, 2.0)); }
 
-double Vector::zComponentOfCrossProductWith(Vector other) const { return x_ * other.y_ - y_ * other.x_; }
+double Vector::zComponentOfCrossProductWith(Vector other) { return x_ * other.y_ - y_ * other.x_; }
+
+double Vector::dotProductWith(Vector other) { return x_ * other.x_ + y_ * other.y_; }

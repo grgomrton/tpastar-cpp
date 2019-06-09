@@ -25,13 +25,13 @@ Edge::Edge(Vector a, Vector b) : a_(a), b_(b)
     if (a == b) { throw std::invalid_argument("The specified endpoints are equal"); }
 }
 
-Vector Edge::a() const { return a_; }
+Vector Edge::a() { return a_; }
 
-Vector Edge::b() const { return b_; }
+Vector Edge::b() { return b_; }
 
-double Edge::distanceFrom(Vector point) const { return this->closestPointTo(point).distanceFrom(point); }
+double Edge::distanceFrom(Vector point) { return this->closestPointTo(point).distanceFrom(point); }
 
-bool Edge::pointLiesOnEdge(Vector point) const { return distanceFrom(point) < Vector::EQUALITY_CHECK_TOLERANCE; }
+bool Edge::pointLiesOnEdge(Vector point) { return distanceFrom(point) < Vector::EQUALITY_CHECK_TOLERANCE; }
 
 /*
  * source: http://www.gamedev.net/topic/444154-closest-point-on-a-line/
@@ -50,7 +50,7 @@ bool Edge::pointLiesOnEdge(Vector point) const { return distanceFrom(point) < Ve
  *   Vector Closest = A + AB * t;
  * }
  */
-Vector Edge::closestPointTo(Vector point) const
+Vector Edge::closestPointTo(Vector point)
 {
     Vector ap = point - a();
     Vector ab = b() - a();
@@ -63,7 +63,7 @@ Vector Edge::closestPointTo(Vector point) const
     return closest;
 }
 
-bool Edge::operator==(Edge other) const
+bool Edge::operator==(Edge other)
 {
     return ((a() == other.a()) && b() == other.b())
         || ((a() == other.b()) && b() == other.a());

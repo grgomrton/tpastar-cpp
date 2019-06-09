@@ -26,15 +26,15 @@ namespace TpaStarCpp::GeometryLibrary {
         const Vector a_;
         const Vector b_;
 
-        Vector closestPointTo(Vector point) const;
+        Vector closestPointTo(Vector point);
 
     public:
         Edge(Vector a,Vector b);
-        Vector a() const;
-        Vector b() const ;
-        double distanceFrom(Vector point) const;
-        bool pointLiesOnEdge(Vector point) const;
-        bool operator==(Edge other) const;
+        Vector a();
+        Vector b() ;
+        double distanceFrom(Vector point);
+        bool pointLiesOnEdge(Vector point);
+        bool operator==(Edge other);
 
         // todo hashes
 
